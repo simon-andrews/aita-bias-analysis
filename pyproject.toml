@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "aita-bias-analysis"
+version = "0.1.0"
+description = "School project focused on detecting and eliminating bias in AITA thread outcomes"
+authors = ["Sarah Akbar <sakbar@umass.edu>", "Simon Andrews <sbandrews@umass.edu>", "Prakamya Mishra <prakamyamish@umass.edu>", "Rohan Mittal <rohanmittal@umass.edu>"]
+readme = "README.md"
+packages = [{include = "aita_bias_analysis"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

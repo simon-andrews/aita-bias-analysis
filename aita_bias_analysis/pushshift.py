@@ -37,7 +37,7 @@ class AITAPost:
         self.upvote_ratio: float = data["upvote_ratio"]
 
     def __repr__(self):
-        return f"{self.title} ({self.judgement})"
+        return f"{self.title} ({self.flair})"
 
 
 def get_submissions_on_day(

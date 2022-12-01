@@ -1,3 +1,13 @@
 # Python stuff
+__pycache__/
 .mypy_cache/
 .venv/
+
+# Data
+data/
+
+# Private data
+.envrc
+
+# Editor settings
+.vscode/

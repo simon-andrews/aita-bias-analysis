@@ -1,9 +1,11 @@
+import json
 from datetime import date, timedelta
 from pprint import pprint
 from time import mktime
-from typing import List
+from typing import List, Optional
 
 import requests
+from reddit import Comment, get_comments
 
 BASE_API_URL = "https://api.pushshift.io"
 SUBMISSION_API_URL = BASE_API_URL + "/reddit/search/submission"
@@ -35,6 +37,12 @@ class AITAPost:
         self.text: str = data["selftext"]
         self.title: str = data["title"]
         self.upvote_ratio: float = data["upvote_ratio"]
+        self.comments: Optional[List[Comment]] = None
+
+    def get_comments(self) -> List[Comment]:
+        if self.comments is None:
+            self.comments = get_comments(self.id)
+        return self.comments
 
     def __repr__(self):
         return f"{self.title} ({self.flair})"
@@ -43,7 +51,7 @@ class AITAPost:
 def get_submissions_on_day(
     day: date,
     max_results: int = 500,
-) -> List[dict]:
+) -> List[AITAPost]:
     """
     Query the PushShift API for posts on /r/AITAFiltered for a given day.
     """
@@ -67,11 +75,12 @@ def get_submissions_on_day(
             f"received no data from PushShift API, so your query ({url}) is probably wrong"
         )
 
-    # All is well, return data.
-    return data
+    # All is well, build and return posts.
+    return [AITAPost(p) for p in data]
 
 
 if __name__ == "__main__":
     d = date(2022, 9, 1)
     results = get_submissions_on_day(d, max_results=10)
-    pprint(AITAPost(results[0]).__dict__)
+    results[0].get_comments()
+    pprint(json.dumps(results[0]))

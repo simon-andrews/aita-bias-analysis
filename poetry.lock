@@ -53,7 +53,7 @@ colorama = {version = "*", markers = "platform_system == \"Windows\""}
 name = "colorama"
 version = "0.4.6"
 description = "Cross-platform colored terminal text."
-category = "dev"
+category = "main"
 optional = false
 python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*,!=3.6.*,>=2.7"
 
@@ -164,6 +164,18 @@ lint = ["black", "flake8", "flynt", "pre-commit", "pydocstyle"]
 test = ["betamax (>=0.8,<0.9)", "betamax-matchers (>=0.4.0,<0.5)", "betamax-serializers (>=0.2.0,<0.3)", "mock (>=0.8)", "pytest", "testfixtures (>4.13.2,<7)"]
 
 [[package]]
+name = "pyphen"
+version = "0.13.2"
+description = "Pure Python module to hyphenate text"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.extras]
+doc = ["sphinx", "sphinx_rtd_theme"]
+test = ["coverage[toml]", "flake8 (<5)", "pytest", "pytest-cov", "pytest-flake8", "pytest-isort", "pytest-xdist"]
+
+[[package]]
 name = "requests"
 version = "2.28.1"
 description = "Python HTTP for Humans."
@@ -182,12 +194,40 @@ socks = ["PySocks (>=1.5.6,!=1.5.7)"]
 use-chardet-on-py3 = ["chardet (>=3.0.2,<6)"]
 
 [[package]]
+name = "textstat"
+version = "0.7.3"
+description = "Calculate statistical features from text"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+pyphen = "*"
+
+[[package]]
 name = "tomli"
 version = "2.0.1"
 description = "A lil' TOML parser"
 category = "dev"
 optional = false
 python-versions = ">=3.7"
+
+[[package]]
+name = "tqdm"
+version = "4.64.1"
+description = "Fast, Extensible Progress Meter"
+category = "main"
+optional = false
+python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,>=2.7"
+
+[package.dependencies]
+colorama = {version = "*", markers = "platform_system == \"Windows\""}
+
+[package.extras]
+dev = ["py-make (>=0.1.0)", "twine", "wheel"]
+notebook = ["ipywidgets (>=6)"]
+slack = ["slack-sdk"]
+telegram = ["requests"]
 
 [[package]]
 name = "types-requests"
@@ -199,6 +239,14 @@ python-versions = "*"
 
 [package.dependencies]
 types-urllib3 = "<1.27"
+
+[[package]]
+name = "types-tqdm"
+version = "4.64.7.9"
+description = "Typing stubs for tqdm"
+category = "dev"
+optional = false
+python-versions = "*"
 
 [[package]]
 name = "types-urllib3"
@@ -261,7 +309,7 @@ test = ["websockets"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "07281f435396ba58052eca57f3976bcfcfb5e551b60712349243e9096b8ef762"
+content-hash = "3f91b68f50f9eb5dc63b851d78c39897b2441b9054d3c7f75072ef989f46affe"
 
 [metadata.files]
 black = [
@@ -363,17 +411,33 @@ prawcore = [
     {file = "prawcore-2.3.0-py3-none-any.whl", hash = "sha256:48c17db447fa06a13ca3e722201f443031437708daa736c05a1df895fbcceff5"},
     {file = "prawcore-2.3.0.tar.gz", hash = "sha256:daf1ccd4b7a80dc4e6567d48336d782e94a9a6dad83770fc2edf76dc9a84f56d"},
 ]
+pyphen = [
+    {file = "pyphen-0.13.2-py3-none-any.whl", hash = "sha256:e88cfb46aed61f4c7fe49592ff322e6266485fd2447c818a9123485cd92b7ef4"},
+    {file = "pyphen-0.13.2.tar.gz", hash = "sha256:847f57a043a58408f24670ae0184ff6edfb5fd5731743208228c028ddc514438"},
+]
 requests = [
     {file = "requests-2.28.1-py3-none-any.whl", hash = "sha256:8fefa2a1a1365bf5520aac41836fbee479da67864514bdb821f31ce07ce65349"},
     {file = "requests-2.28.1.tar.gz", hash = "sha256:7c5599b102feddaa661c826c56ab4fee28bfd17f5abca1ebbe3e7f19d7c97983"},
+]
+textstat = [
+    {file = "textstat-0.7.3-py3-none-any.whl", hash = "sha256:cbd9d641aa5abff0852638f0489913f31ea52fe597ccbaa337b4fc2a44efd15e"},
+    {file = "textstat-0.7.3.tar.gz", hash = "sha256:60b63cf8949f45bbb3b4205e4411bbc1cd66df4c08aef12545811c7e6e24f011"},
 ]
 tomli = [
     {file = "tomli-2.0.1-py3-none-any.whl", hash = "sha256:939de3e7a6161af0c887ef91b7d41a53e7c5a1ca976325f429cb46ea9bc30ecc"},
     {file = "tomli-2.0.1.tar.gz", hash = "sha256:de526c12914f0c550d15924c62d72abc48d6fe7364aa87328337a31007fe8a4f"},
 ]
+tqdm = [
+    {file = "tqdm-4.64.1-py2.py3-none-any.whl", hash = "sha256:6fee160d6ffcd1b1c68c65f14c829c22832bc401726335ce92c52d395944a6a1"},
+    {file = "tqdm-4.64.1.tar.gz", hash = "sha256:5f4f682a004951c1b450bc753c710e9280c5746ce6ffedee253ddbcbf54cf1e4"},
+]
 types-requests = [
     {file = "types-requests-2.28.11.5.tar.gz", hash = "sha256:a7df37cc6fb6187a84097da951f8e21d335448aa2501a6b0a39cbd1d7ca9ee2a"},
     {file = "types_requests-2.28.11.5-py3-none-any.whl", hash = "sha256:091d4a5a33c1b4f20d8b1b952aa8fa27a6e767c44c3cf65e56580df0b05fd8a9"},
+]
+types-tqdm = [
+    {file = "types-tqdm-4.64.7.9.tar.gz", hash = "sha256:aecd96552e9c3b87e1926cb312734f135426ffc3254d8e64cfeb3ba591ef72c5"},
+    {file = "types_tqdm-4.64.7.9-py3-none-any.whl", hash = "sha256:8871999c7f4a8cd24655dcb44cfcca03efd931a9b49e62530a8880bd909c5474"},
 ]
 types-urllib3 = [
     {file = "types-urllib3-1.26.25.4.tar.gz", hash = "sha256:eec5556428eec862b1ac578fb69aab3877995a99ffec9e5a12cf7fbd0cc9daee"},

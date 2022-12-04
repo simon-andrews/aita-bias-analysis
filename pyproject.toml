@@ -12,6 +12,7 @@ requests = "^2.28.1"
 praw = "^7.6.1"
 tqdm = "^4.64.1"
 textstat = "^0.7.3"
+vadersentiment = "^3.3.2"
 
 [tool.poetry.group.dev.dependencies]
 black = "^22.10.0"
@@ -30,6 +31,10 @@ ignore_missing_imports = true
 
 [[tool.mypy.overrides]]
 module = "textstat.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "vaderSentiment.*"
 ignore_missing_imports = true
 
 # TODO: we should have typing for these

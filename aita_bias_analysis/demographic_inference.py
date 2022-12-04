@@ -11,7 +11,7 @@ age_gender_regex = re.compile(
 )
 
 
-def get_gender_and_age(text: str) -> Tuple[Optional[int], Optional[Gender]]:
+def get_age_and_gender(text: str) -> Tuple[Optional[int], Optional[Gender]]:
     # Remove all characters but letters, numbers, spaces, and apostrophes.
     text = "".join([c for c in text if c.isalnum() or c in {" ", "'"}])
 
@@ -36,5 +36,5 @@ if __name__ == "__main__":
 
     with open(f"data/{sys.argv[1]}.json", "r") as f:
         post = json.loads(f.read())
-    m = get_gender_and_age(post["text"])
+    m = get_age_and_gender(post["text"])
     print(m)

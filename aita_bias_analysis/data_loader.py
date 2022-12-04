@@ -3,6 +3,9 @@ import os
 from pprint import pprint
 from typing import List, Optional
 
+import numpy as np
+import pandas as pd
+import sklearn
 import textstat
 from demographic_inference import get_age_and_gender
 from judgements import extractJudgment
@@ -49,16 +52,49 @@ def load_posts(start: Optional[int] = None, end: Optional[int] = None) -> List[d
     pbar = tqdm(files)
     for x in pbar:
         x = x[:-5]
-        pbar.set_description(x)
+        pbar.set_description(f"loading post: {x}")
         if x in EMPTY_FILES:
             continue
         posts.append(load_post(x))
     return posts
 
 
+def flatten_post(post: dict) -> pd.DataFrame:
+    records = []
+    op_data = {
+        "op_created": post["created"],
+        "op_flair": post["flair"],
+        "op_flesch_reading_ease": post["flesch_reading_ease"],
+        "op_age": post["op_age"],
+        "op_gender": post["op_gender"],
+        "op_permalink": post["permalink"],
+        "op_score": post["score"],
+        "op_sentiment": post["sentiment"],
+        "op_upvote_ratio": post["upvote_ratio"],
+    }
+    for comment in post["comments"]:
+        record = op_data.copy()
+        record["comment_created"] = int(comment["created"])
+        record["comment_flesch_reading_ease"] = comment["flesch_reading_ease"]
+        record["comment_judgement"] = comment["judgement"]
+        record["comment_permalink"] = comment["permalink"]
+        record["comment_score"] = comment["score"]
+        record["comment_sentiment"] = comment["sentiment"]
+        records.append(record)
+    df = pd.DataFrame.from_records(records)
+    return df
+
+
+def flatten_posts(posts: List[dict]) -> pd.DataFrame:
+    pbar = tqdm(posts)
+    fs = []
+    for post in pbar:
+        pbar.set_description(f"flattening post: {post['id']}")
+        fs.append(flatten_post(post))
+    return pd.concat(fs)
+
+
 if __name__ == "__main__":
-    posts = load_posts(0, 5)
-    one_post = posts[0]
-    pprint(one_post["comments"][0])
-    del one_post["comments"]
-    pprint(one_post)
+    posts = load_posts()
+    df = flatten_posts(posts)
+    print(df.describe())

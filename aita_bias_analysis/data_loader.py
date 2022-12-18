@@ -86,6 +86,7 @@ def flatten_post(post: dict) -> pd.DataFrame:
         record["comment_score"] = comment["score"]
         record["comment_sentiment"] = comment["sentiment"]
         record["comment_word_count"] = comment["word_count"]
+        record["comment_tree_depth"] = comment["tree_depth"]
         records.append(record)
     df = pd.DataFrame.from_records(records)
     return df

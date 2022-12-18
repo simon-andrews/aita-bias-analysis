@@ -1,6 +1,7 @@
 import os
 from pprint import pprint
 from typing import List
+from collections import deque
 
 import praw
 
@@ -24,6 +25,7 @@ class Comment:
         self.id = praw_comment.id
         self.permalink = praw_comment.permalink
         self.score = praw_comment.score
+        self.tree_depth = get_comment_tree_depth(praw_comment)
 
     def __eq__(self, other) -> bool:
         if not isinstance(other, Comment):
@@ -50,6 +52,20 @@ def get_comments(id: str) -> List[Comment]:
         comments.append(Comment(comment))
     return comments
 
+def get_comment_tree_depth(comment: praw.models.Comment) -> int:
+    tree_depth = 0
+    comment_queue = deque()
+
+    comment_queue.append(comment)
+    while (len(comment_queue)):
+        for i in range(len(comment_queue)):
+            elem = comment_queue.popleft()
+            for reply in elem.replies:
+                comment_queue.append(reply)
+
+        tree_depth += 1
+
+    return tree_depth
 
 if __name__ == "__main__":
     comments = get_comments("z9me1u")

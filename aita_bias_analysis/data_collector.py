@@ -8,8 +8,8 @@ from typing import Any, Dict, Generator, List
 from pushshift import AITAPost, get_submissions_on_day
 from tqdm import tqdm
 
-CACHE_DIR = "cache"
-DATA_DIR = "data"
+CACHE_DIR = "cache_test"
+DATA_DIR = "data_test"
 
 
 def date_range(start: date, end: date, step: timedelta) -> List[date]:

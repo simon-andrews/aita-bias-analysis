@@ -1,3 +1,9 @@
+"""
+Look for tags like 19F or 22M in a post, as well as words that give suggestions
+of who this refers to, and try to return the age and gender of the original
+poster.
+"""
+
 import re
 from typing import Literal, Optional, Tuple
 

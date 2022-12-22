@@ -1,3 +1,8 @@
+"""
+Look for keywords like YTA or NAH in a comment to figure out what judgement a
+comment contains.
+"""
+
 import json
 import os
 import re

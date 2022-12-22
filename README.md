@@ -19,9 +19,26 @@ curl -sSL https://install.python-poetry.org | python3 -
 poetry shell 
 poetry install 
 
-# runs the data collector, dates are in YYYY-MM-DD format 
-poetry run python data_collector.py [Start Date] [End Date]
+# runs the data collector to download data from the internet.
+# dates are in YYYY-MM-DD format 
+python aita_bias_analysis/data_collector.py [Start Date] [End Date]
+
+# run the data loader to collect everything into a single csv file
+python aita_bias_analysis/data_loader.py
 ```
+
+To run the loader, you must have Reddit API access, and set the following environment variables
+ - `REDDIT_CLIENT_ID`
+ - `REDDIT_SECRET_KEY`
+to the values given to you by Reddit.
+
+## Using the provided data.csv (recommended)
+Download `data.csv` from the Google Drive folder and place it in the root of this repository.
+
+## Running this code
+Most of our analysis is in Jupyter notebooks, which can be opened an run like any other Jupyter notebook.
+
+If you chose to use Jupyter to install this project's dependencies, you will need to create a new Jupyter kernel that points to this the VirtualEnv's interpreter: `poetry run python -m ipykernel install --user --name aita-bias-analysis`, then use that kernel to run the notebooks instead of the default one.
 
 ## ISC License
 

@@ -1,3 +1,7 @@
+"""
+Code for interacting with PushShift's API.
+"""
+
 import json
 from datetime import date, timedelta
 from pprint import pprint

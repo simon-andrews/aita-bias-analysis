@@ -1,3 +1,10 @@
+"""
+data_collector.py -- Collect data from the internet and collect it into a bunch
+of JSON files in a single directory.
+
+Run like: python aita_bias_analysis/data_collector.py 2022-01-01 2022-01-31
+"""
+
 import json
 import os
 import sys
@@ -13,6 +20,11 @@ DATA_DIR = "data_test"
 
 
 def date_range(start: date, end: date, step: timedelta) -> List[date]:
+    """
+    Returns a list of range from one date to another, like range() but for
+    dates.
+    """
+
     dates = []
     current = start
     while current < end:
@@ -22,6 +34,10 @@ def date_range(start: date, end: date, step: timedelta) -> List[date]:
 
 
 def post_to_dict(post: AITAPost) -> Dict[str, Any]:
+    """
+    Convert an AITAPost object into a dictionary.
+    """
+
     post.get_comments()
     d = post.__dict__
     d["comments"] = [comment.__dict__ for comment in d["comments"]]
@@ -29,11 +45,19 @@ def post_to_dict(post: AITAPost) -> Dict[str, Any]:
 
 
 def ensure_data_dir() -> None:
+    """
+    Make sure the data directory exists, and create it if it doesn't.
+    """
+
     if not os.path.exists(DATA_DIR):
         os.mkdir(DATA_DIR)
 
 
 def write_post_data(post: AITAPost) -> None:
+    """
+    Given an AITAPost object, write a file for it in the data directory.
+    """
+
     ensure_data_dir()
     id = post.id
     path = os.path.join(DATA_DIR, f"{id}.json")

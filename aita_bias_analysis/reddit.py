@@ -1,3 +1,7 @@
+"""
+Code for interacting with Reddit's API, for getting comments.
+"""
+
 import os
 from pprint import pprint
 from typing import List
@@ -16,6 +20,10 @@ r_aita = reddit.subreddit("amitheasshole")
 
 
 class Comment:
+    """
+    Represents a single comment on an AITA post.
+    """
+
     def __init__(self, praw_comment: praw.models.Comment):
         self.author = praw_comment.author.name
         self.body = praw_comment.body
@@ -40,6 +48,10 @@ class Comment:
 
 
 def get_comments(id: str) -> List[Comment]:
+    """
+    Get the comments on a post specified by the given ID.
+    """
+
     submission = reddit.submission(id=id)
     comments = list()
     for comment in submission.comments:

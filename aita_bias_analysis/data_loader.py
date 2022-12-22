@@ -1,3 +1,10 @@
+"""
+data_loader.py -- Read post JSON objects from the data directory, enrich it,
+and roll it all up into a single CSV file.
+
+Run like: python aita_bias_analysis/data_loader.py
+"""
+
 import json
 import os
 from pprint import pprint
@@ -20,6 +27,10 @@ SENTIMENT_ANALYZER = SentimentIntensityAnalyzer()
 
 
 def clean_text(text: str) -> str:
+    """
+    Remove whitespace from a string.
+    """
+
     text = text.replace("\n", "")
     text = text.replace("\r", "")
     text = text.replace("\t", " ")
@@ -28,6 +39,11 @@ def clean_text(text: str) -> str:
 
 
 def load_post(id: str) -> dict:
+    """
+    Read a JSON file for a post from disk, then compute and add some extra
+    features to the dictionary.
+    """
+
     file_path = os.path.join(DATA_DIR, f"{id}.json")
     with open(file_path, "r") as f:
         file_contents = f.read()
@@ -50,6 +66,10 @@ def load_post(id: str) -> dict:
 
 
 def load_posts(start: Optional[int] = None, end: Optional[int] = None) -> List[dict]:
+    """
+    Read some number of posts from the data dictionary and process them.
+    """
+
     posts = []
     files = os.listdir("data")[start:end]
     pbar = tqdm(files)
@@ -63,6 +83,11 @@ def load_posts(start: Optional[int] = None, end: Optional[int] = None) -> List[d
 
 
 def flatten_post(post: dict) -> pd.DataFrame:
+    """
+    For each post, return a dataframe where each row corresponds to a comment
+    on that post.
+    """
+
     records = []
     op_data = {
         "op_ah_judgement_ratio": post["ah_judgement_ratio"],
@@ -92,6 +117,10 @@ def flatten_post(post: dict) -> pd.DataFrame:
 
 
 def flatten_posts(posts: List[dict]) -> pd.DataFrame:
+    """
+    Apply the post-flattening procedure to many posts.
+    """
+
     pbar = tqdm(posts)
     fs = []
     for post in pbar:
